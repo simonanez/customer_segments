@@ -11782,7 +11782,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Import libraries necessary for this project</span>
@@ -12093,7 +12093,7 @@ Sample 2 has overall high spending except for Detergents_paper, maybe a public p
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.cross_validation</span> <span class="kn">import</span> <span class="n">train_test_split</span>
@@ -12114,6 +12114,24 @@ Sample 2 has overall high spending except for Detergents_paper, maybe a public p
 <span class="c1"># TODO: Report the score of the prediction using the testing set</span>
 <span class="n">score</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
 <span class="k">print</span> <span class="n">score</span>
+<span class="n">data2</span> <span class="o">=</span> <span class="n">data</span>
+<span class="c1">#added iteration for all features</span>
+<span class="k">for</span> <span class="n">fea</span> <span class="ow">in</span> <span class="n">data2</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="n">targetmilk2</span> <span class="o">=</span> <span class="n">data2</span><span class="p">[</span><span class="n">fea</span><span class="p">]</span>
+    <span class="n">new_data2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data2</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">fea</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+
+    <span class="c1"># TODO: Split the data into training and testing sets using the given feature as the target</span>
+    <span class="n">X_train2</span><span class="p">,</span> <span class="n">X_test2</span><span class="p">,</span> <span class="n">y_train2</span><span class="p">,</span> <span class="n">y_test2</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">new_data2</span><span class="p">,</span> <span class="n">targetmilk2</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+
+    <span class="c1"># TODO: Create a decision tree regressor and fit it to the training set</span>
+    <span class="n">regressor2</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">()</span>
+    <span class="n">regressor2</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train2</span><span class="p">,</span> <span class="n">y_train2</span><span class="p">)</span>
+
+    <span class="c1"># TODO: Report the score of the prediction using the testing set</span>
+    <span class="n">score2</span> <span class="o">=</span> <span class="n">regressor</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test2</span><span class="p">,</span> <span class="n">y_test2</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s1">&#39;For &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">fea</span><span class="p">)</span> <span class="o">+</span><span class="s1">&#39; the score is &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">score2</span><span class="p">)</span>
+ 
 </pre></div>
 
 </div>
@@ -12126,7 +12144,13 @@ Sample 2 has overall high spending except for Detergents_paper, maybe a public p
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>0.395665105165
+<pre>0.388197211132
+For Fresh the score is -0.548711130654
+For Milk the score is 0.40513579969
+For Grocery the score is 0.792857027619
+For Frozen the score is -0.472449502555
+For Detergents_Paper the score is 0.820638604702
+For Delicatessen the score is -9.75317740005
 </pre>
 </div>
 </div>
@@ -12151,7 +12175,7 @@ Sample 2 has overall high spending except for Detergents_paper, maybe a public p
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Answer: I first picked the feature "Milk" as on pure intuition it seemed like the one that looked less important than the other ones, as many people buy milk and it didn't seem to represent a certain group or establishment so i would argue it's not necessary for identifying customer's spending habits and it's clear to see with the low score we get. Which suggests it is not easy to predict whether a customer is buying Milk based on the other products's spending</strong></p>
+<p>**Answer: I first picked the feature "Milk" the reported prediction score was 0.395665105165, so the new model with the removed feature "Milk" can somewhat still predict the values for Milk with the remaining features. For Delicatessen we get a negative score of -9.75, a bigger negative number than any other feature, this means our model wouldn't be able to predict the values of this feature from the remaining features if we dropped it, since the information but the prediction would be lost.</p>
 
 </div>
 </div>
